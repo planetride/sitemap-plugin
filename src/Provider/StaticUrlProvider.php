@@ -40,7 +40,7 @@ final class StaticUrlProvider implements UrlProviderInterface
         return 'static';
     }
     public function getCountryCodeByLocale(string $locale): string {
-       return $locale == 'en_US'?'us': explode("_",$locale)[0];
+      return strtolower(explode("_",$locale)[1]);
     }
     public function generate(ChannelInterface $channel): iterable
     {
