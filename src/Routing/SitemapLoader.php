@@ -20,8 +20,8 @@ final class SitemapLoader extends Loader implements RouteLoaderInterface
     {
         $this->sitemapBuilder = $sitemapBuilder;
     }
-public function getCountryCodeByLocale(string $locale): string {
-       return $locale == 'en_US'?'us': explode("_",$locale)[0];
+    public function getCountryCodeByLocale(string $locale): string {
+    return strtolower(explode("_",$locale)[1]);
     }
     private $channel;
     public function load($resource, $type = null)
