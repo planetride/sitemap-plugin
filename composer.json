@@ -1,0 +1,81 @@
+{
+    "name": "stefandoorn/sitemap-plugin",
+    "type": "sylius-plugin",
+    "description": "Sitemap Plugin for Sylius",
+    "keywords": [
+        "sylius",
+        "sylius-plugin"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "league/flysystem-bundle": "^3.0",
+        "sylius/sylius": "^2.0"
+    },
+    "require-dev": {
+        "lchrusciel/api-test-case": "^5.1",
+        "matthiasnoback/symfony-dependency-injection-test": "^6.0",
+        "nyholm/psr7": "^1.8",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpstan/phpstan-webmozart-assert": "^2.0",
+        "phpunit/phpunit": "^10.0",
+        "sylius-labs/coding-standard": "^4.0",
+        "symfony/browser-kit": "^6.4 || ^7.1",
+        "symfony/debug-bundle": "^6.4 || ^7.1",
+        "symfony/dotenv": "^6.4 || ^7.1",
+        "symfony/intl": "^6.4 || ^7.1",
+        "symfony/runtime": "^6.4 || ^7.0",
+        "symfony/ux-icons": "^2.22",
+        "symfony/web-profiler-bundle": "^6.4 || ^7.1",
+        "symfony/webpack-encore-bundle": "^1.15 || ^2.2"
+    },
+    "config": {
+        "sort-packages": true,
+        "bin-dir": "bin",
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "symfony/thanks": true,
+            "phpstan/extension-installer": true,
+            "symfony/runtime": true,
+            "php-http/discovery": true
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SitemapPlugin\\": "src/",
+            "Tests\\SitemapPlugin\\": ["tests/", "tests/Application/src"]
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/Application/Kernel.php"
+        ]
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php bin/create_node_symlink.php"
+        ],
+        "post-update-cmd": [
+            "php bin/create_node_symlink.php"
+        ],
+        "post-create-project-cmd": [
+            "php bin/create_node_symlink.php"
+        ],
+        "analyse": "bin/phpstan analyse",
+        "check-style": "bin/ecs check --ansi src/ tests/",
+        "fix-style": "ecs check --ansi src/ tests/ --fix",
+        "phpunit": "bin/phpunit",
+        "test": [
+            "@phpunit"
+        ]
+    }
+}

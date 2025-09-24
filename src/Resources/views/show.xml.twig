@@ -1,0 +1,41 @@
+{% import '@SitemapPlugin/Macro/language.html.twig' as language_helper %}
+{% import '@SitemapPlugin/Macro/xml.html.twig' as xml_helper %}
+{% apply spaceless %}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    {%- for url in url_set -%}
+        <url>
+            <loc>{{ absolute_url(url.location) }}</loc>
+            {% if hreflang is not same as(false) and url.alternatives is not empty %}
+                <xhtml:link rel="alternate" hreflang="{{ language_helper.localeToCode(sylius.localeCode) }}" href="{{ absolute_url(url.location) }}"/>
+                {% for alternative in url.alternatives %}
+                    <xhtml:link rel="alternate" hreflang="{{ language_helper.localeToCode(alternative.locale) }}" href="{{ absolute_url(alternative.location) }}"/>
+                {% endfor %}
+            {% endif %}
+            {{ xml_helper.last_modification(url) }}
+            {{ xml_helper.change_frequency(url) }}
+            {{ xml_helper.priority(url) }}
+            {%- if images -%}
+                {{ xml_helper.images(url) }}
+            {%- endif -%}
+        </url>
+        {% if hreflang is not same as(false) and url.alternatives is not empty %}
+            {% for alternative in url.alternatives %}
+                <url>
+                    <loc>{{ absolute_url(alternative.location) }}</loc>
+                    <xhtml:link rel="alternate" hreflang="{{ language_helper.localeToCode(sylius.localeCode) }}" href="{{ absolute_url(url.location) }}"/>
+                    {% for alternativeSub in url.alternatives %}
+                        <xhtml:link rel="alternate" hreflang="{{ language_helper.localeToCode(alternativeSub.locale) }}" href="{{ absolute_url(alternativeSub.location) }}"/>
+                    {% endfor %}
+                    {{ xml_helper.last_modification(url) }}
+                    {{ xml_helper.change_frequency(url) }}
+                    {{ xml_helper.priority(url) }}
+                    {%- if images -%}
+                        {{ xml_helper.images(url) }}
+                    {%- endif -%}
+                </url>
+            {% endfor %}
+        {% endif %}
+    {%- endfor -%}
+</urlset>
+{% endapply %}

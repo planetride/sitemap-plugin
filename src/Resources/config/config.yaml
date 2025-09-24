@@ -1,0 +1,15 @@
+sitemap:
+    static_routes:
+        - { route: sylius_shop_homepage }
+        - { route: sylius_shop_contact_request }
+
+parameters:
+    sylius.sitemap.path: "%kernel.project_dir%/var/sitemap"
+
+flysystem:
+    storages:
+        flysystem.storage.sylius_sitemap:
+            adapter: 'local'
+            options:
+                directory: "%sylius.sitemap.path%"
+                lazy_root_creation: true

@@ -1,0 +1,12 @@
+{% import '@SitemapPlugin/Macro/xml.html.twig' as xml_helper %}
+{% apply spaceless %}
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {%- for url in url_set -%}
+        <sitemap>
+            <loc>{{ absolute_url(url.location) }}</loc>
+            {{- xml_helper.last_modification(url) -}}
+        </sitemap>
+    {% endfor %}
+</sitemapindex>
+{% endapply %}
